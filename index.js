@@ -9,6 +9,6 @@ app.get('/status', function (req, res) {
     var timer=`${(stop - start)/1000} seconds`;
     res.send(JSON.stringify({serverUpTime: timer}))
   });
-app.listen(3000, function () {
+app.listen(3000,'127.0.0.1',function () {
   console.log('Example app listening on port 3000!');
 });
