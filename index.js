@@ -1,4 +1,4 @@
-var express = require('express');
+import express from 'express';
 var app = express();
 const start = Date.now()
 app.get('/ping', function (req, res) {
