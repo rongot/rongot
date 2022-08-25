@@ -3,12 +3,12 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "app": "node index.js",
     "prettier": "npx prettier --check index.js",
-    "prettier1": "npx prettier --single-quote --list-different index.js"
+    "prettier1": "npx prettier --single-quote --list-different index.js",
+    "lint":"npx eslint index.js"
   },
   "keywords": [],
   "author": "",
@@ -19,6 +19,7 @@
   },
   "devDependencies": {
     "eslint": "^8.22.0",
+    "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-react": "^7.30.1",
     "husky": "^8.0.1",
     "lint-staged": "^13.0.3",
