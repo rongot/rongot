@@ -8,9 +8,9 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "app": "node index.js",
     "app1": "node index.mjs",
-    "prettier": "npx prettier --check index.js",
-    "prettier1": "npx prettier --single-quote --list-different index.js",
-    "lint": "npx eslint index.js"
+    "prettier": "npx prettier --check index.mjs",
+    "prettier1": "npx prettier --single-quote --list-different index.mjs",
+    "lint": "npx eslint index.mjs"
   },
   "keywords": [],
   "author": "",
