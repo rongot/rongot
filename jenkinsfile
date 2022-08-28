@@ -1,0 +1,65 @@
+pipeline {
+    //agent {dockerfile true}
+    agent any
+    tools {nodejs "npm"}
+    stages {
+        stage('scm checkout') {
+            steps {
+                // Get some code from a GitHub repository
+                git url: 'https://github.com/rongot/rongot.git', branch: 'main'
+                // Change file permisson
+                 sh '''
+                 npm install
+                   '''
+                 // nohup npm run app &  
+                 
+            }
+        }
+          stage('Code formatting') {
+           steps {
+                script{
+                    try {
+                      def ret = sh(script: 'npm run prettier1', returnStdout: true)
+                    println ret   
+                    }catch (Exception e) {
+                    echo 'Exception occurred: ' + e.toString()
+                                          }
+ 
+                   
+                }
+              }
+          }
+          stage('Code linting') {
+              steps {
+                  script{
+                      try{
+                      def ret = sh(script: 'npm run lint', returnStdout: true)
+                      println ret
+                      }catch (Exception e) {
+                        echo 'Exception occurred: ' + e.toString()
+                        sh 'Handle the exception!'
+  }
+                  }
+              }
+        }
+        stage('docker image build') {
+           steps {
+            script{    
+              sh 'docker build -t devtest .'
+              sh 'docker run -p 3000:8100 devtest'
+                }
+            }
+        }
+    
+        stage('unit-tests') {
+            steps {
+                script{
+                     def ret = sh(script: 'curl 172.17.0.2:8100/ping', returnStdout: true)
+                     println ret
+                    
+                }
+            }
+        }
+ 
+    }
+}
