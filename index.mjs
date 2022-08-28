@@ -1,7 +1,7 @@
  //import express from 'express';
 
- import express from 'express';
-//import express from 'express';
+//  const express=require('express')
+import express from 'express';
 const app = express();
 const start = Date.now()
 app.get('/ping', function (req, res) {
