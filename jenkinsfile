@@ -29,24 +29,33 @@ pipeline {
                 }
               }
           }
-          stage('Code linting') {
-              steps {
-                  script{
-                      try{
-                      def ret = sh(script: 'npm run lint', returnStdout: true)
-                      println ret
-                      }catch (Exception e) {
-                        echo 'Exception occurred: ' + e.toString()
-                        sh 'Handle the exception!'
-  }
-                  }
-              }
-        }
+        //   stage('Code linting') {
+        //       steps {
+        //           script{
+        //               try{
+        //               def ret = sh(script: 'npm run lint', returnStdout: true)
+        //               println ret
+        //               }catch (Exception e) {
+        //                 echo 'Exception occurred: ' + e.toString()
+        //                 sh 'Handle the exception!'
+        //                 }
+        //           }
+        //       }
+        // }
         stage('docker image build') {
            steps {
             script{    
-              sh 'docker build -t devtest .'
-              sh 'docker run -p 3000:8100 devtest'
+             def docImage=docker.build "devtest:latest"
+             println"hi ${docImage}"
+                }
+            }
+        }
+       stage('docker image run') {
+           steps {
+            script{    
+             
+              sh 'docker run -p 3000:3000 -d devtest:latest'
+
                 }
             }
         }
@@ -54,7 +63,7 @@ pipeline {
         stage('unit-tests') {
             steps {
                 script{
-                     def ret = sh(script: 'curl 172.17.0.2:8100/ping', returnStdout: true)
+                     def ret = sh(script: 'curl http://localhost:3000/ping', returnStdout: true)
                      println ret
                     
                 }
