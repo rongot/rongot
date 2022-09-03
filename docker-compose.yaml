@@ -12,5 +12,22 @@ services:
     volumes:
      - /home/jenkins_compose/jenkins_configuration:/var/jenkins_home
      - /var/run/docker.sock:/var/run/docker.sock
-    
+  agent:
+    image: jenkins/ssh-agent:jdk11
+    privileged: true
+    user: root
+    container_name: agent
+    expose:   
+      - 22
+    environment:
+      - JENKINS_AGENT_SSH_PUBKEY=ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQC3XSRcGxy3ilDUZIkf6iCVjHZ0eb9+qhKH2pWpJ3WmUlVDGbs3Bk8MX8lQzUhuRgm2eDYAkpKAgiOEVDqG50QVjh9TIOBSTAttlfvMNmm45igjjTBMVrYqEVpabiTvNDoJqKErwCq/mulQ6ncIxCgucb6WQLToQGBA3KPwitXvHGddTn1KYpqx3G9ThgY5Sj7BmC1TG2d4vPAf/d828jLXv9Mo7k7UKscmpnMxh76PKx0YvNEUoTw7qutQzfaH3EPDPPspHMAXkEbpHzsWHFf4vfEAR+lRd0CwvrxcCx+BPm+5hsD/pwhFDwXQ7NOyYIReLXU4BcugVCZFOd/5SMtrMKexAL3y5PhD+O3J4VnF5waKLuG1qDZp0G0Ajf3mftbIGagF1TO8cbyzMad/U5+TwfuWAnmKif2N62r25e1ZbQTgpGOd3rSBHzi1aN3pwO0cf/xuorvGEG30PKUTDGJfedvC6arSSTHB5bTissXY/5jQmIXBLU00vTgzUZi2WTM= devalore@DESKTOP-KNVAS7I
+  nexus:
+    image: sonatype/nexus
+    volumes:
+      - "nexus-data:/sonatype-work"
+    ports:
+      - "8081:8081"
+  
+volumes:
+  nexus-data: {}
 
